@@ -3,7 +3,14 @@ const fs = require('fs');
 
 const results = [];
 
-fs.createReadStream('kepler-data.csv')
+fs.createReadStream('kepler_data.csv')
+    // connect streams (parse === destination of source)
+    // readable.pipe(writable)
+    .pipe(parse({
+        comment: '#',
+        // to return rows in JS object form
+        columns: true,
+    }))
     .on('data', (data) => {
         results.push(data);
     })
